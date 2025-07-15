@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://anuzka115.github.io/quantum-simulator/Hardware/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Hardware - Quantum Simulator</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Hardware";
+        var mkdocs_page_input_path = "Hardware.md";
+        var mkdocs_page_url = "/quantum-simulator/Hardware/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Quantum Simulator
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Usage/">Usage Guide</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Hardware</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-hardware">1. Hardware</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#laserspy-uses-pulsepy">lasers.py (uses pulse.py)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pulsepy">pulse.py</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mzipy-uses-pulsepy-snspdpy">MZI.py (uses pulse.py, snspd.py)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#snspdpy">snspd.py</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#spspy">sps.py</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hwppy">HWP.py</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pbspy">PBS.py</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-quantum-state">2. Quantum State</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#statepy">state.py</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gatespy">gates.py</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-node-and-channel">3. Node and Channel</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#nodepy">node.py</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#channelpy">channel.py</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Protocols/">Protocol</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Topology/">Topology</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Utility/">Utils</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Quantum Simulator</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Hardware</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="hardware-module">Hardware Module</h1>
+<p>This module contains implementations of core physical components used in QKD setups. Each file represents a modeled device with its behavior defined through classes and methods.</p>
+<h2 id="1-hardware">1. Hardware</h2>
+<h3 id="laserspy-uses-pulsepy"><a href="./lasers.py"><code>lasers.py</code></a> (uses <a href="./pulse.py"><code>pulse.py</code></a>)</h3>
+<p>The lasers.py module models a laser source capable of emitting light pulses. In the context of QKD, it simulates the emission of optical pulses used to encode and transmit quantum information. The generated pulses can carry polarization or phase-encoded quantum states, serving as carriers in the QKD protocol.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>Laser(wavelength: float, amplitude: float)</code></li>
+</ul>
+<p><strong>Functions:</strong></p>
+<ul>
+<li><code>emit_pulse(duration: float, phase: float, quantum_state: None | QuantumState)</code>
+  Returns an instance of the <code>Pulse</code> class.</li>
+</ul>
+<hr />
+<h3 id="pulsepy"><a href="./pulse.py"><code>pulse.py</code></a></h3>
+<p>A pulse represents a discrete transmission of quantum information in the form of electromagnetic energy. In QKD, pulses carry encoded quantum states (e.g., polarization) and are the physical medium used to transmit bits securely.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>Pulse(wavelength: float, duration: float, amplitude: float, phase: float, shape: callable, quantum_state: QuantumState, polarisation)</code></li>
+</ul>
+<p><strong>Functions:</strong></p>
+<ul>
+<li><code>photon_energy()</code>
+  Returns the energy of a single photon (<code>E = hc / λ</code>).</li>
+<li><code>calculate_energy()</code>
+  Returns the energy of the entire wave.</li>
+<li><code>default_shape(t)</code>
+  Returns the default shape of the wave (Gaussian).</li>
+<li><code>sample_photon_arrivals()</code>
+  Returns a list of <code>Pulse</code> instances, each representing a photon. The number of photons is Poisson-distributed based on the mean photon number (Weak Coherent Pulses).</li>
+</ul>
+<p><strong>Note:</strong> The polarization and quantum state can be defined independently. The simulator does not enforce consistency between the two.</p>
+<hr />
+<h3 id="mzipy-uses-pulsepy-snspdpy"><a href="./MZI.py"><code>MZI.py</code></a> (uses <a href="./pulse.py"><code>pulse.py</code></a>, <a href="./snspd.py"><code>snspd.py</code></a>)</h3>
+<p>The Mach-Zehnder Interferometer (MZI) is an optical device used to measure phase shifts in quantum signals. In QKD simulations, it allows for interference-based measurements that are crucial for certain protocols (e.g., phase-encoded QKD). By comparing the phase of incoming pulses, the MZI helps determine bit values based on interference outcomes.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>MachZehnderInterferometer(snspd0: SNSPD, snspd1: SNSPD, visibility: float, phase_noise_std: float)</code></li>
+</ul>
+<p><strong>Functions:</strong></p>
+<ul>
+<li>
+<p><code>measure(pulse_prev: Pulse, pulse_next: Pulse, current_time: simpy time)</code>
+  Returns:</p>
+</li>
+<li>
+<p><code>0</code> if detector 0 is activated (phase difference = 0)</p>
+</li>
+<li><code>1</code> if detector 1 is activated (phase difference = π)</li>
+<li>Additional metadata in a dictionary</li>
+</ul>
+<hr />
+<h3 id="snspdpy"><a href="./snspd.py"><code>snspd.py</code></a></h3>
+<p>The Superconducting Nanowire Single-Photon Detector (SNSPD) is a highly sensitive photon detector used in QKD systems. It detects the arrival of individual photons with high efficiency and low noise, making it ideal for secure quantum communication where precise detection is critical.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>SNSPD(efficiency: float, dark_count_rate: Hz, dead_time, timing_jitter, efficiency_spectrum)</code></li>
+</ul>
+<p><strong>Functions:</strong></p>
+<ul>
+<li>
+<p><code>detect(pulse, current_time: float, detection_window)</code>
+  Returns a tuple:</p>
+</li>
+<li>
+<p><code>True/False</code> (was a detection registered)</p>
+</li>
+<li>
+<p>Info dictionary:</p>
+<ul>
+<li><code>dark_count: bool</code></li>
+<li><code>detected: bool</code></li>
+<li><code>detection_time</code></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="spspy"><a href="./sps.py"><code>sps.py</code></a></h3>
+<p>The Single Photon Source (SPS) module models the emission of individual photons used in quantum communication. It simulates realistic imperfections such as polarization errors and depolarization effects, which are essential for evaluating the robustness of QKD protocols in practical conditions.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>SPS</code></li>
+</ul>
+<p><strong>Functions:</strong></p>
+<ul>
+<li><code>_apply_polarization_error(qstate: QuantumState)</code>
+  Applies a bit flip due to polarization error.</li>
+<li><code>_apply_depolarization(qstate)</code>
+  Depolarizes the quantum state.</li>
+<li><code>emit_pulse(trigger_time: float)</code>
+  Returns a pulse and an info dictionary.</li>
+<li><code>get_g2_0_empirical()</code>
+  Returns the second-order correlation function (empirical).</li>
+</ul>
+<hr />
+<h3 id="hwppy"><a href="./HWP.py"><code>HWP.py</code></a></h3>
+<p>The Half-Wave Plate (HWP) is an optical device that rotates the polarization of light. In QKD simulations, it is used to implement polarization encoding by altering the state of incoming photons. The model includes imperfections such as angle errors and depolarization to simulate realistic scenarios.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>HalfWavePlate(theta_deg, angle_error_std: radians, depol_prob: float)</code></li>
+</ul>
+<hr />
+<h3 id="pbspy"><a href="./PBS.py"><code>PBS.py</code></a></h3>
+<p>The Polarizing Beam Splitter (PBS) is an optical component used to separate incoming light based on its polarization. In QKD simulations, it helps route photons according to their polarization state, enabling polarization-based encoding and measurement. The implementation includes realistic imperfections such as extinction ratio and angular jitter.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>PolarizingBeamSplitter(extinction_ratio_db, angle_jitter_std)</code></li>
+</ul>
+<hr />
+<h2 id="2-quantum-state">2. Quantum State</h2>
+<h3 id="statepy"><a href="./state.py"><code>state.py</code></a></h3>
+<p>The <code>state.py</code> module defines the quantum state representation used throughout the simulation. It includes tools for defining, manipulating, and measuring single-qubit quantum states represented by vectors or density matrices.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>QuantumState(ket: np.ndarray, rho: np.ndarray)</code></li>
+</ul>
+<p><strong>Functions:</strong></p>
+<ul>
+<li><code>apply_gate(unitary_matrix)</code>
+  Applies a single-qubit unitary transformation.</li>
+<li><code>depolarize()</code>
+  Depolarizes the state completely.</li>
+<li><code>measure(projectors, shots)</code>
+  Simulates measurement and state collapse. Returns a dictionary of basis state occurrences.</li>
+</ul>
+<hr />
+<h3 id="gatespy"><a href="./gates.py"><code>gates.py</code></a></h3>
+<p>The <code>gates.py</code> module contains standard quantum gates (e.g., Pauli, Hadamard) represented as matrices. These gates can be applied to <code>QuantumState</code> objects. Users can also define custom gates and add them to this module.</p>
+<p>Contains predefined gates and their matrices. Users can define and add custom gates here.</p>
+<hr />
+<h2 id="3-node-and-channel">3. Node and Channel</h2>
+<h3 id="nodepy"><a href="./node.py"><code>node.py</code></a></h3>
+<p>The <code>node.py</code> module defines the abstraction for network nodes in the QKD system. Each node acts as a sender or receiver of quantum or classical data and can be configured with hardware components and communication ports.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>Node(node_id, env: simpy.Environment)</code></li>
+</ul>
+<p><strong>Functions:</strong></p>
+<ul>
+<li><code>assign_port(port_id, port_name)</code></li>
+<li><code>add_component(comp_name, comp_obj)</code></li>
+<li><code>connect_nodes(sender_port_id, receiver_port_id, receiver_node_id, channel_obj)</code></li>
+<li><code>send(sender_port_id, data)</code></li>
+<li><code>receive(data, receiver_port_id)</code>
+  The <code>receive</code> method is used to model simulation delay and is overridden in protocol-specific implementations.</li>
+</ul>
+<hr />
+<h3 id="channelpy"><a href="./channel.py"><code>channel.py</code></a></h3>
+<p>The <code>channel.py</code> module simulates the communication medium between nodes. It models both quantum and classical channels with parameters such as distance-based loss, transmission delay, and noise.</p>
+<p><strong>Class:</strong></p>
+<ul>
+<li><code>OpticalChannel(name, length_meters, attenuation_db_per_m, light_speed=2e8)</code></li>
+</ul>
+<p><strong>Functions:</strong></p>
+<ul>
+<li><code>compute_loss()</code></li>
+<li><code>compute_delay()</code></li>
+</ul>
+<p><strong>Subclasses:</strong></p>
+<ul>
+<li><code>QuantumChannel</code>: Adds depolarizing noise.</li>
+<li><code>ClassicalChannel</code>: Adds delay, no loss.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Usage/" class="btn btn-neutral float-left" title="Usage Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Protocols/" class="btn btn-neutral float-right" title="Protocol">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Usage/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Protocols/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

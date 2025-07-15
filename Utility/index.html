@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://anuzka115.github.io/quantum-simulator/Utility/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Utils - Quantum Simulator</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Utils";
+        var mkdocs_page_input_path = "Utility.md";
+        var mkdocs_page_url = "/quantum-simulator/Utility/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Quantum Simulator
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Usage/">Usage Guide</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hardware/">Hardware</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Protocols/">Protocol</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Topology/">Topology</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Utils</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-entanglement_managepy">1. entanglement_manage.py</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#class-entanglementmanager">Class: EntanglementManager</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-key_ratepy">2. key_rate.py</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#function-binary_entropyq">Function: binary_entropy(q)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#function-compute_key_rateqber-sifted_rate05">Function: compute_key_rate(qber, sifted_rate=0.5)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-testpy">3. test.py</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#purpose">Purpose:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#key-elements">Key Elements:</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Quantum Simulator</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Utils</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="utils-module">Utils Module</h1>
+<p>This module provides utility functions and components that support key QKD operations such as entanglement generation, key rate analysis, and unit testing.</p>
+<h2 id="1-entanglement_managepy">1. <code>entanglement_manage.py</code></h2>
+<p>Provides tools for generating Bell pairs and distributing them between two quantum nodes.</p>
+<h3 id="class-entanglementmanager">Class: <code>EntanglementManager</code></h3>
+<p>Handles the creation and distribution of entangled quantum states between two nodes.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li>
+<p><code>__init__()</code></p>
+</li>
+<li>
+<p>Initializes an empty dictionary of entangled pairs.</p>
+</li>
+<li>
+<p><code>create_bell_pair(node_a: Node, node_b: Node, bell_type='00')</code></p>
+</li>
+<li>
+<p>Creates a Bell state (default Φ⁺) between <code>node_a</code> and <code>node_b</code>.</p>
+</li>
+<li>Applies Hadamard and CNOT to prepare the state.</li>
+<li>Returns a pair ID and the shared quantum state.</li>
+</ul>
+<p>Use case: Used in protocols like E91 to simulate entanglement-based QKD.</p>
+<hr />
+<h2 id="2-key_ratepy">2. <code>key_rate.py</code></h2>
+<p>Implements formulas for computing the theoretical key generation rate.</p>
+<h3 id="function-binary_entropyq">Function: <code>binary_entropy(q)</code></h3>
+<p>Returns the Shannon binary entropy of probability <code>q</code>. If <code>q</code> is 0 or 1, returns 0.</p>
+<h3 id="function-compute_key_rateqber-sifted_rate05">Function: <code>compute_key_rate(qber, sifted_rate=0.5)</code></h3>
+<ul>
+<li>Computes the asymptotic key rate for a given QBER (Quantum Bit Error Rate).</li>
+<li>Applies the formula: <code>key_rate = sifted_rate × max(0, 1 - 2 × H(qber))</code></li>
+</ul>
+<p>Returns a rounded value to 6 decimal places.</p>
+<p>Use case: Estimating secret key yield under noisy channels.</p>
+<hr />
+<h2 id="3-testpy">3. <code>test.py</code></h2>
+<p>Test script to validate entanglement correlation between two nodes.</p>
+<h3 id="purpose">Purpose:</h3>
+<ul>
+<li>Verifies that Bell pairs created by <code>EntanglementManager</code> result in perfectly correlated measurement outcomes.</li>
+<li>Performs 1000 trials and prints the count of matching outcomes.</li>
+</ul>
+<h3 id="key-elements">Key Elements:</h3>
+<ul>
+<li>Uses a <code>DummyEnv</code> class to mock SimPy environment.</li>
+<li>Creates two nodes (<code>Alice</code> and <code>Bob</code>).</li>
+<li>Creates Bell pairs and measures in the Z-basis.</li>
+<li>Uses Python’s <code>Counter</code> to analyze frequency of correlated outcomes.</li>
+</ul>
+<p>Use case: Demonstrates entanglement fidelity and correlation statistics for Bell state Φ⁺ in the simulation.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Topology/" class="btn btn-neutral float-left" title="Topology"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Topology/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

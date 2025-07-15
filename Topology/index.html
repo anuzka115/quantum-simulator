@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://anuzka115.github.io/quantum-simulator/Topology/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Topology - Quantum Simulator</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Topology";
+        var mkdocs_page_input_path = "Topology.md";
+        var mkdocs_page_url = "/quantum-simulator/Topology/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Quantum Simulator
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Usage/">Usage Guide</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hardware/">Hardware</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Protocols/">Protocol</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Topology</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#topology">Topology</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#startopology">StarTopology</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ringtopology">RingTopology</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#meshtopology">MeshTopology</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Utility/">Utils</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Quantum Simulator</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Topology</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="topology-module">Topology Module</h1>
+<p>This module defines an abstract <code>Topology</code> class and specific subclasses for star, ring, and mesh network configurations. It is responsible for building and managing the structure of a quantum network in terms of nodes and optical channels.</p>
+<h2 id="classes">Classes</h2>
+<h3 id="topology"><code>Topology</code></h3>
+<p>Represents a generic network topology for QKD nodes and their connecting channels.</p>
+<p><strong>Constructor:</strong></p>
+<pre><code class="language-python">Topology(node_specs: dict, channel_specs: dict)
+</code></pre>
+<ul>
+<li>
+<p><code>node_specs</code>: A dictionary where keys are node IDs and values are dictionaries containing:</p>
+</li>
+<li>
+<p><code>type</code>: Role of the node (e.g., "Sender", "Receiver")</p>
+</li>
+<li><code>factory</code>: A callable that returns a node object.</li>
+<li><code>channel_specs</code>: A dictionary where keys are (node_a, node_b) tuples and values are callables that return an <code>OpticalChannel</code> object.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>self.nodes</code>: Dictionary mapping node IDs to constructed <code>Node</code> instances.</li>
+<li><code>self.channels</code>: Dictionary mapping (node_a, node_b) tuples to <code>OpticalChannel</code> instances.</li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul>
+<li>
+<p><code>buildTopology(env, num_pulses)</code></p>
+</li>
+<li>
+<p>Builds the topology by instantiating nodes and connecting them with channels.</p>
+</li>
+<li><code>env</code>: SimPy environment.</li>
+<li>
+<p><code>num_pulses</code>: Number of pulses the node will handle.</p>
+</li>
+<li>
+<p><code>get_node(node_id)</code></p>
+</li>
+<li>
+<p>Returns the node object corresponding to <code>node_id</code>.</p>
+</li>
+<li>
+<p><code>get_neighbors(node_id)</code></p>
+</li>
+<li>
+<p>Returns a list of node IDs that are directly connected to the specified node.</p>
+</li>
+</ul>
+<hr />
+<h3 id="startopology"><code>StarTopology</code></h3>
+<p>A specialization of <code>Topology</code> representing a star-shaped network.</p>
+<p><strong>Constructor:</strong></p>
+<pre><code class="language-python">StarTopology(center_node_id, leaf_node_ids, node_specs, channel_specs)
+</code></pre>
+<ul>
+<li><code>center_node_id</code>: ID of the central node.</li>
+<li><code>leaf_node_ids</code>: List of IDs of peripheral nodes.</li>
+<li>Inherits and initializes from the <code>Topology</code> class.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>self.center</code>: Central node ID.</li>
+<li><code>self.leaves</code>: List of peripheral node IDs.</li>
+</ul>
+<hr />
+<h3 id="ringtopology"><code>RingTopology</code></h3>
+<p>A specialization of <code>Topology</code> representing a ring network.</p>
+<p><strong>Constructor:</strong></p>
+<pre><code class="language-python">RingTopology(node_ids, node_specs, channel_specs)
+</code></pre>
+<ul>
+<li><code>node_ids</code>: List of node IDs in the ring.</li>
+<li>Inherits from the <code>Topology</code> class.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>self.ring_nodes</code>: Node IDs in ring structure.</li>
+</ul>
+<hr />
+<h3 id="meshtopology"><code>MeshTopology</code></h3>
+<p>A specialization of <code>Topology</code> representing a fully connected mesh network.</p>
+<p><strong>Constructor:</strong></p>
+<pre><code class="language-python">MeshTopology(node_ids, node_specs, channel_specs)
+</code></pre>
+<ul>
+<li><code>node_ids</code>: List of node IDs in the mesh.</li>
+<li>Inherits from the <code>Topology</code> class.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>self.mesh_nodes</code>: Node IDs in mesh structure.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Protocols/" class="btn btn-neutral float-left" title="Protocol"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Utility/" class="btn btn-neutral float-right" title="Utils">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Protocols/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Utility/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
