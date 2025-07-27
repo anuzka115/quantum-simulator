@@ -53,6 +53,62 @@
               </ul>
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Protocol</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#bb84-protocol">BB84 Protocol</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#protocol-summary">Protocol Summary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#simulation-parameters">Simulation Parameters</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#class-alice">Class: Alice</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-bob">Class: Bob</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dps-protocol">DPS Protocol</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#overview_1">Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#protocol-summary_1">Protocol Summary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#simulation-parameters_1">Simulation Parameters</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#class-alice_1">Class: Alice</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#class-bob_1">Class: Bob</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#coherent-one-way-cow-qkd-protocol">Coherent-One-Way (COW) QKD Protocol</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#overview_2">Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#protocol-summary_2">Protocol Summary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#simulation-parameters_2">Simulation Parameters</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#class-alicenode">class Alice(Node)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-bobnode">class Bob(Node)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#e91-quantum-key-distribution-protocol">E91 Quantum Key Distribution Protocol</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#overview_3">Overview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#protocol-summary_3">Protocol Summary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#simulation-parameters_3">Simulation Parameters</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#class-alice_2">Class: Alice</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#class-bob_2">Class: Bob</a>
+    </li>
+    </ul>
                 </li>
               </ul>
               <ul>
@@ -86,7 +142,410 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="all-simulated-protocols">All simulated protocols</h1>
+<h2 id="bb84-protocol">BB84 Protocol</h2>
+<h2 id="overview">Overview</h2>
+<p>The <strong>BB84 protocol</strong> is a prepare-and-measure quantum key distribution (QKD) scheme based on encoding information into the polarization states of single photons.</p>
+<p>This simulation models BB84 using realistic quantum hardware components including:
+- Half-wave plates (HWPs)
+- Polarizing beam splitters (PBS)
+- Superconducting nanowire single-photon detectors (SNSPDs)
+- A quantum channel with configurable noise and attenuation</p>
+<hr />
+<h2 id="protocol-summary">Protocol Summary</h2>
+<ol>
+<li>
+<p><strong>Preparation (Alice)</strong></p>
+<ul>
+<li>Randomly chooses a bit (0 or 1) and an encoding basis (X or Z)</li>
+<li>Applies a half-wave plate to encode the polarization accordingly</li>
+<li>Sends a weak coherent pulse through a noisy quantum channel</li>
+</ul>
+</li>
+<li>
+<p><strong>Measurement (Bob)</strong></p>
+<ul>
+<li>Randomly selects a measurement basis (X or Z)</li>
+<li>Applies a half-wave plate and splits the polarization using a PBS</li>
+<li>Detects the photon via an SNSPD to determine the bit value</li>
+</ul>
+</li>
+<li>
+<p><strong>Post-Processing</strong></p>
+<ul>
+<li>Alice and Bob publicly compare bases</li>
+<li>Keep only the bits where both used the same basis (sifted key)</li>
+<li>Compute Quantum Bit Error Rate (QBER)</li>
+<li>Apply error correction and privacy amplification (asymptotic key rate)</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="simulation-parameters">Simulation Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POL_ERR_STD</code></td>
+<td>Polarization noise in channel (deg)</td>
+<td><code>1.0</code></td>
+</tr>
+<tr>
+<td><code>BOB_HWP_ERR_STD</code></td>
+<td>HWP angle error at Bob (deg)</td>
+<td><code>0.0</code></td>
+</tr>
+<tr>
+<td><code>PBS_ANGLE_JITTER_STD</code></td>
+<td>Misalignment noise in PBS</td>
+<td><code>0.0</code></td>
+</tr>
+<tr>
+<td><code>PBS_EXTINCTION_DB</code></td>
+<td>Extinction ratio of PBS (dB)</td>
+<td><code>60.0</code></td>
+</tr>
+<tr>
+<td><code>DARK_COUNT_RATE</code></td>
+<td>SNSPD dark count rate (Hz)</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>SNSPD_EFFICIENCY</code></td>
+<td>SNSPD efficiency</td>
+<td><code>0.9</code></td>
+</tr>
+<tr>
+<td><code>SNSPD_JITTER</code></td>
+<td>SNSPD timing jitter (s)</td>
+<td><code>40e-12</code></td>
+</tr>
+<tr>
+<td><code>pulse.mean_photon_number</code></td>
+<td>Photon number per pulse</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>pulse.duration</code></td>
+<td>Pulse duration</td>
+<td><code>70e-12</code></td>
+</tr>
+<tr>
+<td><code>pulse.wavelength</code></td>
+<td>Pulse wavelength</td>
+<td><code>1550e-9</code></td>
+</tr>
+<tr>
+<td><code>num_pulses</code></td>
+<td>Total number of pulses sent</td>
+<td><code>1,000,000</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="class-alice">Class: <code>Alice</code></h3>
+<pre><code class="language-python">class Alice(Node):
+    def __init__(self, node_id, env, num_pulses):
+</code></pre>
+<h3 id="class-bob">Class: <code>Bob</code></h3>
+<pre><code class="language-python">class Bob(Node):
+    def __init__(self, node_id, env): 
+</code></pre>
+<h2 id="dps-protocol">DPS Protocol</h2>
+<h2 id="overview_1">Overview</h2>
+<p>The <strong>DPS (Differential Phase Shift)</strong> protocol is a prepare-and-measure quantum key distribution (QKD) scheme that encodes bits using the <strong>phase difference</strong> between consecutive weak coherent pulses.</p>
+<p>It offers practical implementation advantages by relying on a simple setup involving:
+- Lasers emitting weak pulses
+- Mach-Zehnder interferometers (MZIs)
+- Superconducting nanowire detectors (SNSPDs)</p>
+<hr />
+<h2 id="protocol-summary_1">Protocol Summary</h2>
+<ol>
+<li>
+<p><strong>Preparation (Alice)</strong></p>
+<ul>
+<li>Uses a laser to emit a train of weak coherent pulses.</li>
+<li>Randomly applies phase shifts: <code>0</code> or <code>π</code> to each pulse.</li>
+<li>Sends pulses one-by-one through a quantum channel.</li>
+</ul>
+</li>
+<li>
+<p><strong>Measurement (Bob)</strong></p>
+<ul>
+<li>Receives consecutive pulses and interferes them using a Mach-Zehnder interferometer.</li>
+<li>Based on the interference result (constructive or destructive), he infers whether the phase difference is <code>0</code> (bit = 0) or <code>π</code> (bit = 1).</li>
+<li>The phase difference is what carries the key bit.</li>
+</ul>
+</li>
+<li>
+<p><strong>Security Mechanism</strong></p>
+<ul>
+<li>Since the key is encoded in the <strong>phase difference</strong>, any eavesdropping attempt (e.g., measuring a single pulse) destroys the coherence and introduces errors.</li>
+<li>QBER increases significantly (above 10-15%) if Eve tries to intercept.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="simulation-parameters_1">Simulation Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pulse.phase</code></td>
+<td>Phase shift applied to each pulse (0 or π)</td>
+<td>Random</td>
+</tr>
+<tr>
+<td><code>pulse.mean_photon_number</code></td>
+<td>Average photons per pulse</td>
+<td><code>0.2</code></td>
+</tr>
+<tr>
+<td><code>pulse.duration</code></td>
+<td>Pulse duration</td>
+<td><code>70e-12</code></td>
+</tr>
+<tr>
+<td><code>pulse.wavelength</code></td>
+<td>Pulse wavelength</td>
+<td><code>1550e-9</code></td>
+</tr>
+<tr>
+<td><code>num_pulses</code></td>
+<td>Total number of pulses sent</td>
+<td><code>1,000,000</code></td>
+</tr>
+<tr>
+<td><code>MZI.visibility</code></td>
+<td>Interferometer visibility</td>
+<td><code>0.98</code></td>
+</tr>
+<tr>
+<td><code>phase_noise_std</code></td>
+<td>Phase noise in interferometer</td>
+<td><code>0.2</code></td>
+</tr>
+<tr>
+<td><code>SNSPD efficiency</code></td>
+<td>Photon detection efficiency</td>
+<td><code>0.9</code></td>
+</tr>
+<tr>
+<td><code>dark count rate</code></td>
+<td>Background dark count rate</td>
+<td><code>10 Hz</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="class-alice_1">Class: <code>Alice</code></h2>
+<pre><code class="language-python">
+class Alice(Node):
+    def __init__(self, node_id, env, num_pulses):
+        ...
+
+</code></pre>
+<h2 id="class-bob_1">Class: <code>Bob</code></h2>
+<pre><code class="language-python">
+class Bob(Node):
+    def __init__(self, node_id, env, mzi):
+        ...
+</code></pre>
+<h2 id="coherent-one-way-cow-qkd-protocol">Coherent-One-Way (COW) QKD Protocol</h2>
+<h2 id="overview_2">Overview</h2>
+<p>The <strong>COW protocol</strong> is a prepare-and-measure quantum key distribution (QKD) scheme using <strong>time-bin encoding</strong> and <strong>weak coherent pulses</strong>. It ensures security through <strong>decoy states</strong> and <strong>interference monitoring</strong>.</p>
+<hr />
+<h2 id="protocol-summary_2">Protocol Summary</h2>
+<p><strong>Preparation (Alice)</strong></p>
+<ul>
+<li>Sends pulses in time-bin pairs.  </li>
+<li><strong>Bit 0</strong>: Pulse in the first bin, vacuum in the second.  </li>
+<li><strong>Bit 1</strong>: Vacuum in the first bin, pulse in the second.  </li>
+<li><strong>Decoy state</strong>: Pulses in both bins (used for eavesdropper detection).  </li>
+</ul>
+<p><strong>Transmission</strong></p>
+<ul>
+<li>Pulses travel through a lossy, noisy quantum channel.  </li>
+</ul>
+<p><strong>Measurement (Bob)</strong></p>
+<ul>
+<li>90% of pulses are measured directly to form the key (data line).  </li>
+<li>10% are routed to an interferometer (monitor line) to detect interference.  </li>
+</ul>
+<p><strong>Post-Processing</strong></p>
+<ul>
+<li>Sifted key is extracted from correctly timed detections.  </li>
+<li>Decoy statistics and interferometer clicks (<code>DM2</code>) are used to verify security.  </li>
+<li>If too many <code>DM2</code> detections occur, the protocol is aborted.</li>
+</ul>
+<hr />
+<h2 id="simulation-parameters_2">Simulation Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>num_pulses</code></td>
+<td>Number of time-bin pairs sent</td>
+<td>1000</td>
+</tr>
+<tr>
+<td><code>decoy_prob</code></td>
+<td>Probability of sending a decoy state</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td><code>pulse.duration</code></td>
+<td>Duration of each pulse (s)</td>
+<td>70e-12</td>
+</tr>
+<tr>
+<td><code>pulse.mean_photon_number</code></td>
+<td>Average photon number per pulse</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td><code>monitor_ratio</code></td>
+<td>Fraction of pulses sent to monitor line</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td><code>visibility</code></td>
+<td>Interferometer visibility</td>
+<td>0.98</td>
+</tr>
+<tr>
+<td><code>phase_noise_std</code></td>
+<td>Standard deviation of phase noise</td>
+<td>0.02</td>
+</tr>
+<tr>
+<td><code>SNSPD efficiency</code></td>
+<td>Detector efficiency</td>
+<td>0.9</td>
+</tr>
+<tr>
+<td><code>SNSPD dark count rate</code></td>
+<td>Detector dark count rate (Hz)</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="classes">Classes</h2>
+<h3 id="class-alicenode"><code>class Alice(Node)</code></h3>
+<pre><code class="language-python">def __init__(self, node_id, env, num_pulses, decoy_prob):
+</code></pre>
+<h3 id="class-bobnode"><code>class Bob(Node)</code></h3>
+<pre><code class="language-python">def __init__(self, node_id, env, snspd, monitor_ratio=0.1, threshold=5):
+
+</code></pre>
+<h2 id="e91-quantum-key-distribution-protocol">E91 Quantum Key Distribution Protocol</h2>
+<h2 id="overview_3">Overview</h2>
+<p>The <strong>E91 protocol</strong> is an <strong>entanglement-based</strong> quantum key distribution (QKD) scheme. Instead of sending quantum states directly, Alice and Bob share entangled photon pairs and perform local measurements on them. The correlation of their results provides both a shared key and a built-in security check via <strong>Bell’s inequality</strong>.</p>
+<p>This simulation uses:
+- Entangled photon pairs (|Ψ⁻⟩ state)
+- Configurable depolarization, misalignment, and detector flip errors
+- Local projective measurements in the x–z plane
+- A trusted entanglement manager to distribute entangled pairs</p>
+<hr />
+<h2 id="protocol-summary_3">Protocol Summary</h2>
+<p><strong>Entanglement Creation</strong></p>
+<ul>
+<li>A Bell pair in the state |Ψ⁻⟩ is distributed between Alice and Bob.</li>
+<li>State depolarization (Werner noise) is simulated via a tunable parameter <code>p_depol</code>.</li>
+</ul>
+<p><strong>Measurement</strong></p>
+<ul>
+<li>Alice randomly selects from measurement angles: <strong>0, π/4, π/2</strong>  </li>
+<li>Bob randomly selects from: <strong>π/4, π/2, 3π/4</strong></li>
+<li>Both apply a small Gaussian misalignment to simulate real-world errors.</li>
+<li>Local projective measurements are performed using a custom function <code>measure_local</code>.</li>
+<li>Results are stored as ±1, and detector flip errors are injected with probability <code>p_flip</code>.</li>
+</ul>
+<p><strong>Key Generation</strong></p>
+<ul>
+<li>Only measurement rounds where <strong>Alice and Bob used the same nominal basis</strong> are retained.</li>
+<li>Alice and Bob convert ±1 → 0/1.</li>
+<li>Bob flips his bit (due to anticorrelation of |Ψ⁻⟩) to match Alice.</li>
+<li>The resulting bit sequences form the <strong>sifted key</strong>.</li>
+</ul>
+<p><strong>Security Check</strong></p>
+<ul>
+<li>Measurement rounds with mismatched bases are used to compute the <strong>Bell parameter (S)</strong>.</li>
+<li>A violation of Bell’s inequality (|S| &gt; 2) confirms entanglement and quantum security.</li>
+</ul>
+<hr />
+<h2 id="simulation-parameters_3">Simulation Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>num_pulses</code></td>
+<td>Number of entangled pairs generated</td>
+<td>10,000</td>
+</tr>
+<tr>
+<td><code>p_depol</code></td>
+<td>Depolarization probability (white noise)</td>
+<td>0.03</td>
+</tr>
+<tr>
+<td><code>misalign_deg</code></td>
+<td>Angle misalignment std. dev (in degrees)</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td><code>p_flip</code></td>
+<td>Probability of bit-flip due to detector error</td>
+<td>0.01</td>
+</tr>
+<tr>
+<td><code>clock_rate</code></td>
+<td>Entangled pair generation rate</td>
+<td>10 MHz</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="class-alice_2">Class: <code>Alice</code></h2>
+<pre><code class="language-python">class Alice(Node):
+    def __init__(self, node_id, env, num_pulses, p_depol, misalign_deg, p_flip)
+
+    def run(self, manager, bob):
+        # 1. Creates noisy entangled state
+        # 2. Measures her half using basis angle φa
+        # 3. Records outcome, applies noise and flip
+</code></pre>
+<h2 id="class-bob_2">Class: <code>Bob</code></h2>
+<pre><code class="language-python">class Bob(Node):
+    def __init__(self, node_id, env):
+        self.phi_list = []
+        self.s_list = []
+</code></pre>
               
             </div>
           </div><footer>
