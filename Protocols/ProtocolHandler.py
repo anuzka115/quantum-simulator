@@ -31,10 +31,16 @@ class ProtocolHandler:
             role = node_info["role"]
             args = node_info["args"]
             self.node_objs[node_id] = self.node_factory(node_id, role, env, **args)
+        node_names = list(config["nodes"].keys())
+        a, b = node_names[0], node_names[1]
+        channel=None
+        if self.channel_factory is not None and "channel" in config:
+            a, b = config["channel"]["endpoints"]
+            channel_args = config["channel"]["args"]
+            channel = self.channel_factory(a, b, **channel_args)
 
-        a, b = config["channel"]["endpoints"]
-        channel_args = config["channel"]["args"]
-        channel = self.channel_factory(a, b, **channel_args)
+
+        
 
        # self.run_function(node_objs[a], node_objs[b], channel, env, **config.get("protocol_args", {}))
         self.qber, self.asym_key_rate = self.run_function(

@@ -149,13 +149,7 @@ class Bob(Node):
 
 def run_bb84(alice: Alice, bob: Bob, channel:QuantumChannel, env, num_pulses=1000000, **kwargs):
     
-    #env = simpy.Environment()
-
-    #alice = Alice('Alice', env, num_pulses=10000)
-    #bob   = Bob('Bob', env)
-
-    # realistic channel depolarization
-    #qc = QuantumChannel('QChan',length_meters=1,attenuation_db_per_m=0, depol_prob=0.1)
+    
     print(f"[run_bb84] alice: {type(alice)}, bob: {type(bob)}")
 
     alice.connect_nodes('q', 'q', bob, channel)
@@ -181,10 +175,7 @@ def run_bb84(alice: Alice, bob: Bob, channel:QuantumChannel, env, num_pulses=100
                 sifted_alice.append(alice.sent_bits[pid])
                 sifted_bob.append(bob.received_bits[pid])
 
-    #print(f"Alice sifted key: {sifted_alice}")
-    #print(f"Bob   sifted key: {sifted_bob}")
-    #print(f"Sifted key length: {len(sifted_alice)}")
-    sim_time = (num_pulses + 10) * 1e-9
+    sim_time = (num_pulses) * 1e-9
     sifted_key_rate = len(sifted_alice) / sim_time
 
     if sifted_alice:
@@ -192,6 +183,7 @@ def run_bb84(alice: Alice, bob: Bob, channel:QuantumChannel, env, num_pulses=100
         qber   = errors / len(sifted_alice)
         
         asym_key_rate=key_rate.compute_key_rate(qber, sifted_key_rate)
+        print(qber, sifted_key_rate, asym_key_rate, len(sifted_alice))
         return qber, asym_key_rate
 
     else:

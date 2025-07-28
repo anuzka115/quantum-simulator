@@ -8,7 +8,8 @@ def binary_entropy(q):
 
 def compute_key_rate(qber, sifted_rate=0.5):
     """
-    Computes asymptotic key rate given QBER and sifted key rate.
+    Computes asymptotic key rate given QBER and sifted key rate. 
+    Highly idealistic, assumes an infinite no of pulses
     
     Args:
         qber (float): Quantum Bit Error Rate (0 ≤ qber ≤ 1)

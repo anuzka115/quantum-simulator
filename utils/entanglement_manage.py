@@ -23,7 +23,7 @@ class EntanglementManager:
             '11': np.array([0, 0, 0, 1], dtype=complex)
         }
         state = basis_states[bell_type]
-        H_I = np.kron(H, np.eye(2, dtype=complex))
+        H_I = np.kron(H, np.eye(2, dtype=complex)) #HI
         state = H_I @ state
         state = CX @ state
         shared_state = QuantumState(ket=state)

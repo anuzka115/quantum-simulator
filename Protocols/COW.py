@@ -10,7 +10,7 @@ from Hardware.node import Node
 from Hardware.lasers import Laser
 from Hardware.channel import QuantumChannel
 from Hardware.snspd import SNSPD
-from Hardware.MZI import MachZehnderInterferometer
+from Hardware.MZI import MachZehnderInterferometer  
 def quantize_time(t, bin_width=1e-9): #basically returns x ns as x
     return round(t / bin_width)
 

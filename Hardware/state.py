@@ -37,7 +37,7 @@ class QuantumState:
         self.rho = np.eye(d) / d #ρ=I/d
         self.ket = None
         
-    def measure(self, projectors: list[np.ndarray]=[P0, P1], shots=1)->dict:
+    def measure(self, projectors: list[np.ndarray]=[P0, P1], shots=1)->dict: 
         '''Here, projectors are used to define the measurement basis'''
         probabilities = [np.real(np.trace(P @ self.rho)) for P in projectors] #pi=Tr(Pi ρ), here rho is the state we're measuring, Pi is the projector of the ith basis and pi is the probability of collapsing in that basis/
         

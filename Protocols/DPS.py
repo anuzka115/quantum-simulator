@@ -2,7 +2,7 @@ import sys
 import os
 import numpy as np
 import simpy
-
+import time
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils import key_rate
 from Hardware.pulse import Pulse
@@ -24,6 +24,7 @@ class Alice(Node):
 
     def run(self, port_id):
         laser = Laser(wavelength=1550e-9, amplitude=1.0)
+        start = time.perf_counter()
         for i in range(self.num_pulses):
             phase = np.random.choice([0, np.pi])
             pulse = laser.emit_pulse(duration=70e-12, phase=phase)
@@ -33,6 +34,8 @@ class Alice(Node):
             self.sent_pulses.append(pulse)
             self.send(port_id, pulse)
             yield self.env.timeout(1e-9)  # 1 ns pulse interval
+        end = time.perf_counter()
+        print(f"[ALICE] Time to send pulses: {end - start:.2f}s")
 
 
 class Bob(Node):
@@ -64,27 +67,9 @@ class Bob(Node):
             self.det_info.append(info)
 
 
-def run_dps(alice: Alice, bob: Bob, channel:QuantumChannel, env, num_pulses=1000000, **kwargs):
-    
-    
+def run_dps(alice: Alice, bob: Bob, channel:QuantumChannel, env, num_pulses=10_00_000, **kwargs):
     
 
-    # --- Alice ---
-    #alice = Alice("Alice", env, num_pulses)
-
-    # --- Channel ---
-    '''channel = QuantumChannel(
-        name="Channel_Alice_Bob",
-        length_meters=90_000,
-        attenuation_db_per_m=0.2/1000,  # 0.2 dB/km
-        depol_prob=0.0  
-    )'''
-
-    # --- Bob ---
-    
-    #bob = Bob("Bob", env, mzi)
-
-    # --- Ports & Connection ---
     alice.assign_port("qport", "quantum_out")
     bob.assign_port("qport", "quantum_in")
     alice.connect_nodes("qport", "qport", bob, channel)
@@ -94,10 +79,7 @@ def run_dps(alice: Alice, bob: Bob, channel:QuantumChannel, env, num_pulses=1000
     sim_time = (num_pulses + 10) * 1e-6
     env.run(until=sim_time)
 
-    # --- Stats & Key Extraction ---
-    #print(f"Alice pulses sent:     {len(alice.sent_pulses)}")
-    #print(f"Bob pulses received:   {len(bob.received_pulses)}")
-    #print(f"Bob key bits extracted: {len(bob.bits)}")
+   
 
 
     bob_ids, bob_next_ids, bob_bits = zip(*bob.bits) if bob.bits else ([], [], [])
@@ -124,12 +106,12 @@ def run_dps(alice: Alice, bob: Bob, channel:QuantumChannel, env, num_pulses=1000
     qber = errors / L if L else 0
     sim_time = (num_pulses + 10) * 1e-9
     sifted_key_rate = L / sim_time
+    print("Sifted key rate", sifted_key_rate)
     asym_key_rate=key_rate.compute_key_rate(qber, sifted_key_rate)
+    print("QBER", qber)
+    print( asym_key_rate)
     return qber, asym_key_rate
-    return qber
-    print("First 10 matched Alice bits:", final_alice_bits[:10])
-    print("First 10 matched Bob bits:  ", final_bob_bits[:10])
-    print(f"QBER (Quantum Bit Error Rate): {qber:.3f}")
+    
 
 def node_factory(name, role, env, num_pulses=10_00_000):
     if role == "Sender":
@@ -151,4 +133,20 @@ def channel_factory (a, b, length_meters, attenuation_db_per_m, depol_prob, pol_
         depol_prob=depol_prob,
         pol_err_std=pol_err_std
     )
-
+#'''
+env=simpy.Environment()
+alice=Alice("al", env, 10_00_000)
+snspd0 = SNSPD(efficiency=0.9, dark_count_rate=10, dead_time=30e-9, timing_jitter=30e-12)
+snspd1 = SNSPD(efficiency=0.9, dark_count_rate=10, dead_time=30e-9, timing_jitter=30e-12)
+mzi = MachZehnderInterferometer(snspd0=snspd0, snspd1=snspd1, visibility=0.98, phase_noise_std=0.2)
+bob=Bob("bob", env, mzi)
+channel=QuantumChannel(
+        name="q_chan",
+        length_meters=90_000,
+        attenuation_db_per_m= 0.0002,
+        depol_prob=0.1,
+        pol_err_std=1
+    )
+run_dps(alice, bob, channel, env, num_pulses=10_00_000)
+    
+#'''
